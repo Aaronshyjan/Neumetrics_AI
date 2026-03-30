@@ -1,0 +1,11 @@
+.env
+__pycache__/
+*.pkl
+.DS_Store
+node_modules/
+dist/
+build/
+.venv/
+env/
+venv/
+*.pyc
