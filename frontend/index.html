@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroMetrics AI</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --bg: #ffffff;
+            --surface: #f4f4f4;
+            --dot-bg: #e5e5e5;
+            --text-main: #000000;
+            --text-muted: #666666;
+            --nothing-red: #ff3131;
+            --low-green: #00ff41;
+            --medium-yellow: #ffcc00;
+            --high-red: #ff3131;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            background-image: radial-gradient(var(--dot-bg) 1px, transparent 1px);
+            background-size: 24px 24px;
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 4rem;
+        }
+
+        .wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ===== HEADER ===== */
+        .nothing-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--text-main);
+        }
+
+        .logo {
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+        }
+
+        .status-pill {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: var(--nothing-red);
+            border-radius: 50%;
+        }
+
+        /* ===== GRID LAYOUT ===== */
+        .nothing-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 3rem;
+        }
+
+        /* ===== TYPING SECTION ===== */
+        .input-tile {
+            background: transparent;
+            border: 2px solid var(--text-main);
+            border-radius: 40px;
+            padding: 3rem;
+        }
+
+        textarea {
+            width: 100%;
+            height: 550px;
+            border: none;
+            background: transparent;
+            font-family: 'Space Mono', monospace;
+            font-size: 1.35rem;
+            color: var(--text-main);
+            outline: none;
+            resize: none;
+            line-height: 1.6;
+        }
+
+        /* ===== ANALYTICS DASHBOARD ===== */
+        .dash-tile {
+            background: var(--surface);
+            border: 2px solid var(--text-main);
+            border-radius: 40px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tile-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+        }
+
+        .load-indicator {
+            text-align: center;
+            padding: 2.5rem 0;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 2.5rem;
+        }
+
+        #load {
+            font-family: 'Space Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        /* Semantic Colors */
+        .load-none #load {
+            color: var(--text-main);
+        }
+
+        .load-low #load {
+            color: var(--low-green);
+        }
+
+        .load-medium #load {
+            color: var(--medium-yellow);
+        }
+
+        .load-high #load {
+            color: var(--high-red);
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.25rem 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            font-size: 0.8125rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .metric-value {
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 1.125rem;
+        }
+
+        /* ===== SYSTEM INFO TILE ===== */
+        .info-tile {
+            background: var(--text-main);
+            color: #ffffff;
+            border-radius: 40px;
+            padding: 2rem;
+        }
+
+        .info-tile p {
+            font-size: 0.8125rem;
+            line-height: 1.6;
+            font-family: 'Space Mono', monospace;
+            opacity: 0.9;
+            text-transform: uppercase;
+        }
+
+        .nothing-footer {
+            margin-top: 10rem;
+            padding: 3rem 0;
+            text-align: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.625rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 1024px) {
+            .nothing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- HEADER -->
+        <header class="nothing-header">
+            <div class="logo">NEUROMETRICS AI</div>
+            <div class="status-pill">
+                <div class="dot"></div>
+                <span id="status">Active Node</span>
+            </div>
+        </header>
+
+        <!-- MAIN LAYOUT -->
+        <main class="nothing-grid">
+            <!-- INPUT SECTION -->
+            <section class="editor-section">
+                <div class="input-tile">
+                    <textarea id="typingArea" spellcheck="false"
+                        placeholder="Start typing... Behavioral analysis active."></textarea>
+                </div>
+            </section>
+
+            <!-- ANALYTICS DASHBOARD -->
+            <aside class="dashboard">
+                <div class="dash-tile">
+                    <div class="tile-title">Cognitive Load Analysis</div>
+
+                    <div class="load-indicator">
+                        <span id="load">WAITING...</span>
+                    </div>
+
+                    <div class="metrics-list">
+                        <div class="metric-row">
+                            <span class="metric-label">Confidence Score</span>
+                            <span id="confidence" class="metric-value">0%</span>
+                        </div>
+
+                        <div class="metric-row">
+                            <span class="metric-label">Captures</span>
+                            <span id="keyCount" class="metric-value">0</span>
+                        </div>
+
+                        <div class="metric-row">
+                            <span class="metric-label">Dwell Avg</span>
+                            <span class="metric-value"><span id="avgDwell">0</span> ms</span>
+                        </div>
+
+                        <div class="metric-row">
+                            <span class="metric-label">Flight Avg</span>
+                            <span class="metric-value"><span id="avgFlight">0</span> ms</span>
+                        </div>
+
+                        <div class="metric-row">
+                            <span class="metric-label">Velocity</span>
+                            <span class="metric-value"><span id="typingSpeed">0</span> wpm</span>
+                        </div>
+
+                        <div class="metric-row">
+                            <span class="metric-label">Cognitive Pauses</span>
+                            <span id="pauseCount" class="metric-value">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-tile">
+                    <p>System Protocol: Random Forest Classification. Temporal micro-pattern monitoring enabled.
+                        Behavioral markers active.</p>
+                </div>
+            </aside>
+        </main>
+
+        <footer class="nothing-footer">
+            <p>&copy; 2026 NOTHING BY NEUROMETRICS</p>
+        </footer>
+    </div>
+
+    <script>
+        let keyTimings = [];
+        let lastKeyTime = null;
+        let lastReleaseTime = null;
+
+        const typingArea = document.getElementById("typingArea");
+        const loadSpan = document.getElementById("load");
+        const confidenceSpan = document.getElementById("confidence");
+        const keyCount = document.getElementById("keyCount");
+        const statusText = document.getElementById("status");
+
+        const avgDwellSpan = document.getElementById("avgDwell");
+        const avgFlightSpan = document.getElementById("avgFlight");
+        const typingSpeedSpan = document.getElementById("typingSpeed");
+        const pauseCountSpan = document.getElementById("pauseCount");
+
+        typingArea.addEventListener("keydown", function (event) {
+            const currentTime = Date.now();
+            const dwellStart = currentTime;
+
+            function keyUpHandler(e) {
+                if (e.key === event.key) {
+                    const dwellTime = Date.now() - dwellStart;
+                    const flightTime = lastReleaseTime ? currentTime - lastReleaseTime : 0;
+
+                    if (event.key.length === 1) {
+                        keyTimings.push({
+                            key: event.key,
+                            dwell: dwellTime,
+                            flight: flightTime,
+                            timestamp: currentTime
+                        });
+                    }
+
+                    lastKeyTime = currentTime;
+                    lastReleaseTime = Date.now();
+                    keyCount.innerText = keyTimings.length;
+
+                    updateLiveStats();
+                    document.removeEventListener("keyup", keyUpHandler);
+                }
+            }
+
+            document.addEventListener("keyup", keyUpHandler);
+        });
+
+        typingArea.addEventListener("input", function () {
+            if (typingArea.value.length === 0) {
+                keyTimings = [];
+                lastKeyTime = null;
+
+                loadSpan.innerText = "NONE";
+                const dashTile = document.querySelector('.dash-tile');
+                dashTile.className = "dash-tile load-none";
+
+                keyCount.innerText = "0";
+                avgDwellSpan.innerText = "0";
+                avgFlightSpan.innerText = "0";
+                typingSpeedSpan.innerText = "0";
+                pauseCountSpan.innerText = "0";
+            }
+        });
+
+        function updateLiveStats() {
+            if (keyTimings.length < 2) return;
+
+            const dwells = keyTimings.map(k => k.dwell);
+            const flights = keyTimings.map(k => k.flight);
+
+            const avgDwell = dwells.reduce((a, b) => a + b, 0) / dwells.length;
+            const avgFlight = flights.reduce((a, b) => a + b, 0) / flights.length;
+
+            const durationMs =
+                keyTimings[keyTimings.length - 1].timestamp -
+                keyTimings[0].timestamp;
+
+            const typingSpeed =
+                (keyTimings.length / Math.max(durationMs / 1000, 1)) * 5;
+
+            const pauseCount = flights.filter(f => f > 800).length;
+
+            avgDwellSpan.innerText = avgDwell.toFixed(2);
+            avgFlightSpan.innerText = avgFlight.toFixed(2);
+            typingSpeedSpan.innerText = typingSpeed.toFixed(1);
+            pauseCountSpan.innerText = pauseCount;
+        }
+
+        setInterval(() => {
+            if (keyTimings.length >= 5) {
+                statusText.innerText = "Analyzing...";
+
+                const recentKeys = keyTimings.slice(-10);
+
+                fetch("/keystrokes", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ data: recentKeys })
+                })
+                    .then(res => res.json())
+                    .then(result => {
+                        loadSpan.innerText = result.load.toUpperCase();
+                        const indicatorBox = document.querySelector('.dash-tile');
+                        indicatorBox.className = "dash-tile load-" + result.load.toLowerCase().replace(/\./g, '');
+                        if (result.confidence) confidenceSpan.innerText = result.confidence;
+                        statusText.innerText = "ONLINE NODE";
+                    })
+                    .catch(() => {
+                        statusText.innerText = "Backend Not Connected";
+                    });
+            }
+        }, 5000);
+
+    </script>
+
+</body>
+
+</html>
